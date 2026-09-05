@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { 
   ArrowLeft, Save, User, CreditCard, MapPin, 
   Phone, Database, Activity, Users, UserPlus, 
-  ClipboardList, CheckCircle2, AlertCircle, Calendar, Droplets
+  ClipboardList, CheckCircle2, AlertCircle, Calendar, Droplets,
+  Pill, Settings, Stethoscope // Ditambahkan untuk sinkronisasi sidebar
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -13,8 +14,8 @@ export default function RegistrasiPasien() {
     nik: '',
     hp: '',
     gender: 'Laki-laki',
-    usia: '', // Field Baru
-    golongan_darah: 'O+', // Field Baru
+    usia: '', 
+    golongan_darah: 'O+', 
     alamat: ''
   });
 
@@ -28,13 +29,11 @@ export default function RegistrasiPasien() {
   const handleSimpan = (e) => {
     e.preventDefault();
     const dataLama = JSON.parse(localStorage.getItem('data_pasien') || '[]');
-    // Menyimpan data lengkap termasuk usia dan golongan darah
     const dataBaru = [...dataLama, { ...formData, id: Date.now() }];
     localStorage.setItem('data_pasien', JSON.stringify(dataBaru));
     
     setShowSuccess(true);
     
-    // Reset form ke kondisi awal
     setFormData({ 
       nama: '', 
       nik: '', 
@@ -51,19 +50,29 @@ export default function RegistrasiPasien() {
   return (
     <div className="min-h-screen bg-[#F1F5F9] flex font-sans text-slate-900">
       
-      {/* SIDEBAR */}
-      <aside className="w-72 bg-emerald-950 text-white hidden lg:flex flex-col shadow-2xl h-screen sticky top-0">
+      {/* SIDEBAR SINKRON */}
+      <aside className="w-72 bg-emerald-950 text-white hidden lg:flex flex-col shadow-2xl h-screen sticky top-0 z-50">
         <div className="p-8 text-2xl font-black border-b border-white/5 flex items-center gap-3">
-          <div className="bg-emerald-500 p-2 rounded-xl">
+          <div className="bg-emerald-50 p-2 rounded-xl">
             <Database size={24} className="text-emerald-950" />
           </div>
           <span>SIRS-T <span className="text-emerald-500 font-light">PRO</span></span>
         </div>
-        <nav className="flex-1 p-6 space-y-2 mt-4">
-          <MenuLink href="/" icon={<Activity size={20} />} label="Dashboard" />
+        
+        <nav className="flex-1 p-6 space-y-2 mt-4 overflow-y-auto">
+          <p className="text-[10px] font-black text-emerald-500/40 uppercase tracking-[0.25em] px-4 mb-4">Sistem Navigasi</p>
+          
+          <MenuLink href="/" icon={<Activity size={20} />} label="Overview" />
           <MenuLink href="/pasien" icon={<Users size={20} />} label="Data Pasien" />
           <MenuLink href="/registrasi" icon={<UserPlus size={20} />} label="Registrasi Baru" active />
+          
+          <MenuLink href="/tenaga-medis" icon={<Stethoscope size={20} />} label="Tenaga Medis" />
+          
           <MenuLink href="/rekam_medis" icon={<ClipboardList size={20} />} label="Rekam Medis" />
+          
+          <MenuLink href="/farmasi" icon={<Pill size={20} />} label="Farmasi & Obat" />
+          
+          <MenuLink href="/monitoring" icon={<Settings size={20} />} label="Konfigurasi" />
         </nav>
       </aside>
 
@@ -223,7 +232,7 @@ export default function RegistrasiPasien() {
                   <Save size={20} /> SIMPAN DATA KE SISTEM
                 </button>
                 <Link href="/pasien" className="bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold px-8 py-5 rounded-[24px] transition-all flex items-center gap-2">
-                   DAFTAR PASIEN
+                    DAFTAR PASIEN
                 </Link>
               </div>
             </form>
@@ -232,7 +241,7 @@ export default function RegistrasiPasien() {
           <div className="mt-8 flex items-center gap-3 bg-blue-50 p-6 rounded-3xl border border-blue-100">
              <AlertCircle className="text-blue-500" size={24} />
              <p className="text-xs text-blue-700 font-medium leading-relaxed">
-               Data yang Anda masukkan (termasuk <strong>Usia</strong> dan <strong>Golongan Darah</strong>) akan langsung tersimpan di database lokal sistem SIRS-T dan dapat diakses melalui menu <strong>Data Pasien</strong>.
+                Data yang Anda masukkan (termasuk <strong>Usia</strong> dan <strong>Golongan Darah</strong>) akan langsung tersimpan di database lokal sistem SIRS-T dan dapat diakses melalui menu <strong>Data Pasien</strong>.
              </p>
           </div>
         </div>

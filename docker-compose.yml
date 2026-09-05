@@ -1,5 +1,5 @@
 services:
-  # Database Lokal (Node Cipasung)
+  # Database Lokal (Node Cipasung - Primary)
   db_sirst:
     image: postgres:15-alpine
     container_name: sirst_db_container
@@ -11,9 +11,22 @@ services:
     ports:
       - "5434:5432" 
     volumes:
-      
       - ./app/database/security_setup.sql:/docker-entrypoint-initdb.d/setup.sql
       - ./postgres_data:/var/lib/postgresql/data
+
+  
+  db_sirst_secondary:
+    image: postgres:15-alpine
+    container_name: sirst_db_secondary_container
+    restart: always
+    environment:
+      POSTGRES_USER: aji_admin
+      POSTGRES_PASSWORD: password_aji
+      POSTGRES_DB: labdb
+    ports:
+      - "5435:5432"
+    volumes:
+      - ./postgres_secondary_data:/var/lib/postgresql/data
 
   
   app_sirst:
@@ -25,6 +38,11 @@ services:
       - "3000:3000"
     depends_on:
       - db_sirst
+      - db_sirst_secondary
     environment:
-      
       DATABASE_URL: postgresql://aji_admin:password_aji@db_sirst:5432/labdb
+
+
+networks:
+  default:
+    name: distrib-net
