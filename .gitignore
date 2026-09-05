@@ -1,3 +1,6 @@
+# dependencies
+node_modules/
+
 # postgres & database
 postgres_secondary_data/
 *.dat
@@ -8,6 +11,11 @@ postgres_secondary_data/
 *.log
 docker-compose.override.yml
 
+# build outputs & local env
+.next/
+out/
+.env*.local
+
 # IDE & editors
 .vscode/
 .idea/
@@ -16,3 +24,4 @@ docker-compose.override.yml
 
 # OS extra
 Thumbs.db
+.DS_Store

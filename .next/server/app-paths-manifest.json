@@ -1,0 +1,13 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/farmasi/page": "app/farmasi/page.js",
+  "/api/status-node/route": "app/api/status-node/route.js",
+  "/monitoring/page": "app/monitoring/page.js",
+  "/registrasi/page": "app/registrasi/page.js",
+  "/page": "app/page.js",
+  "/pasien/page": "app/pasien/page.js",
+  "/api/tren-kunjungan/route": "app/api/tren-kunjungan/route.js",
+  "/rekam_medis/page": "app/rekam_medis/page.js",
+  "/tenaga-medis/page": "app/tenaga-medis/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js"
+}
